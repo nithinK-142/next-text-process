@@ -3,10 +3,13 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import Image from "next/image";
+import TextModal from "./TextModal";
 
 const Profile = () => {
   const [avatarUrl, setAvatarUrl] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [textModalOpen, setTextModalOpen] = useState(false);
+  const [text, setText] = useState("");
 
   const updateAvatar = (imgSrc: string) => {
     setAvatarUrl(imgSrc);
@@ -16,12 +19,23 @@ const Profile = () => {
     setAvatarUrl("");
   };
 
+  const getText = async () => {
+    try {
+      const response = await fetch("/api/text");
+      if (response.ok) {
+        const data = await response.text();
+        setText(data);
+        setTextModalOpen(true);
+      } else console.error("Failed to fetch data from the API");
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   return (
     <div className="flex flex-col items-center pt-12">
-      <h2>Upload Image</h2>
-      <div className="relative flex justify-center items-center mb-6 w-52 h-[20rem] rounded-lg shadow-lg">
+      <div className="relative flex justify-center items-center mb-6 w-52 h-[20rem] shadow-lg rounded-lg">
         {!avatarUrl ? (
-          <button onClick={() => setModalOpen(true)}>
+          <button onClick={() => setModalOpen(true)} aria-label="Add Image">
             <Image src="/plus.png" alt="plus" width={60} height={60} />
           </button>
         ) : (
@@ -34,15 +48,31 @@ const Profile = () => {
             <button
               onClick={clearAvatarUrl}
               className="absolute text-4xl top-2 right-2"
+              aria-label="Remove Image"
             >
               <Image src="/circle.png" alt="plus" width={30} height={30} />
             </button>
           </>
         )}
       </div>
-      <button className={`${avatarUrl ? "bg-blue-600/80" : "bg-stone-700"} px-6 py-[6px] text-xl rounded-lg text-white`}>
+      <button
+        className={`${
+          avatarUrl ? "bg-blue-600/80" : "bg-stone-700 cursor-not-allowed"
+        } px-6 py-[6px] text-xl rounded-lg text-white`}
+        onClick={getText}
+        disabled={!avatarUrl}
+      >
         Convert Image to Text
       </button>
+
+      {textModalOpen && (
+        <TextModal
+          imgSrc={avatarUrl}
+          text={text}
+          closeModal={() => setTextModalOpen(false)}
+          clearUrl={() => setAvatarUrl("")}
+        />
+      )}
       {modalOpen && (
         <Modal
           updateAvatar={updateAvatar}
