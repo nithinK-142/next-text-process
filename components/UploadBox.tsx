@@ -36,7 +36,7 @@ const UploadBox = () => {
   };
   return (
     <div className="flex flex-col items-center pt-12">
-      <div className="relative flex justify-center items-center mb-6 w-52 h-[20rem] shadow-lg rounded-lg">
+      <div className="relative flex justify-center items-center mb-6 w-52 h-[20rem] shadow-3xl border border-black/10 rounded-lg">
         {!avatarUrl ? (
           <button onClick={handleCropModalClick} aria-label="Add Image">
             <Image src="/plus.png" alt="plus" width={60} height={60} />

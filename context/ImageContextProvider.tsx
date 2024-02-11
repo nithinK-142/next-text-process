@@ -5,6 +5,10 @@ import { ImageContext, IImageContext } from "./ImageContext";
 export const ImageContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const [userInfo] = useState({
+    name: "Smriti",
+    url: "/user.png",
+  });
   const [avatarUrl, setAvatarUrl] = useState<string>("");
   const [cropModal, setCropModal] = useState<boolean>(false);
   const [textModal, setTextModal] = useState<boolean>(false);
@@ -27,6 +31,7 @@ export const ImageContextProvider: FC<{ children: ReactNode }> = ({
   };
 
   const ImageContextValue: IImageContext = {
+    userInfo,
     avatarUrl,
     cropModal,
     textModal,

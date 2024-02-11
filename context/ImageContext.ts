@@ -2,6 +2,7 @@
 import { createContext } from "react";
 
 export interface IImageContext {
+  userInfo: { name: string; url: string };
   avatarUrl: string;
   cropModal: boolean;
   textModal: boolean;
@@ -17,6 +18,7 @@ export interface IImageContext {
 }
 
 export const ImageContext = createContext<IImageContext>({
+  userInfo: { name: "", url: "" },
   avatarUrl: "",
   cropModal: false,
   textModal: false,
