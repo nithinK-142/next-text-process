@@ -1,20 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
-import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
+"use client";
+import {
+  ChangeEvent,
+  SyntheticEvent,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import ReactCrop, {
   PercentCrop,
   convertToPixelCrop,
   makeAspectCrop,
 } from "react-image-crop";
 import setCanvasPreview from "@/utils/setCanvasPreview";
+import { ImageContext } from "@/context/ImageContext";
 
 const MIN_DIMENSION = 150;
 
-interface ProfileProps {
-  updateAvatar: (imgSrc: string) => void;
-  closeModal: () => void;
-}
-
-const ImageCropper: React.FC<ProfileProps> = ({ closeModal, updateAvatar }) => {
+const ImageCropper = () => {
+  const { updateAvatar, handleCropModalClick } = useContext(ImageContext);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [imgSrc, setImgSrc] = useState<string>("");
@@ -95,8 +99,8 @@ const ImageCropper: React.FC<ProfileProps> = ({ closeModal, updateAvatar }) => {
             className="px-4 py-2 mt-4 font-mono text-xs text-white rounded-2xl bg-sky-500 hover:bg-sky-600"
             onClick={() => {
               setCanvasPreview(
-                imgRef.current!, 
-                previewCanvasRef.current!, 
+                imgRef.current!,
+                previewCanvasRef.current!,
                 convertToPixelCrop(
                   crop!,
                   imgRef.current!.width,
@@ -105,7 +109,7 @@ const ImageCropper: React.FC<ProfileProps> = ({ closeModal, updateAvatar }) => {
               );
               const dataUrl = previewCanvasRef.current!.toDataURL();
               updateAvatar(dataUrl);
-              closeModal();
+              handleCropModalClick();
             }}
           >
             Crop Image

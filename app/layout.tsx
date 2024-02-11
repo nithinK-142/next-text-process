@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Kanit } from "next/font/google";
 import "./globals.css";
+import { ImageContextProvider } from "@/context/ImageContextProvider";
 import Header from "@/components/Header";
 
 const kanit = Kanit({
@@ -21,8 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={kanit.className}>
-        <Header />
-        {children}
+        <ImageContextProvider>
+          <Header />
+          {children}
+        </ImageContextProvider>
       </body>
     </html>
   );

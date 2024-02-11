@@ -1,11 +1,9 @@
+import { ImageContext } from "@/context/ImageContext";
+import { useContext } from "react";
 import ImageCropper from "./ImageCropper";
 
-interface ProfileProps {
-  updateAvatar: (imgSrc: string) => void;
-  closeModal: () => void;
-}
-
-const Modal: React.FC<ProfileProps> = ({ updateAvatar, closeModal }) => {
+const Modal = () => {
+  const { handleCropModalClick } = useContext(ImageContext);
   return (
     <div
       className="relative z-10"
@@ -21,7 +19,7 @@ const Modal: React.FC<ProfileProps> = ({ updateAvatar, closeModal }) => {
               <button
                 type="button"
                 className="absolute inline-flex items-center justify-center p-1 text-gray-400 rounded-md hover:bg-gray-700 focus:outline-none top-2 right-2"
-                onClick={closeModal}
+                onClick={handleCropModalClick}
               >
                 <span className="sr-only">Close menu</span>
                 <svg
@@ -40,10 +38,7 @@ const Modal: React.FC<ProfileProps> = ({ updateAvatar, closeModal }) => {
                   />
                 </svg>
               </button>
-              <ImageCropper
-                updateAvatar={updateAvatar}
-                closeModal={closeModal}
-              />
+              <ImageCropper />
             </div>
           </div>
         </div>

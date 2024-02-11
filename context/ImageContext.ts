@@ -1,0 +1,29 @@
+import { createContext } from "react";
+
+export interface IImageContext {
+  avatarUrl: string;
+  cropModal: boolean;
+  textModal: boolean;
+  extractedText: string;
+  buttonText: string;
+  updateAvatar: (imgSrc: string) => void;
+  handleCropModalClick: () => void;
+  handleTextModalClick: () => void;
+  clearAvatarUrl: () => void;
+  setExtractedText: (text: string) => void;
+  setButtonText: (text: string) => void;
+}
+
+export const ImageContext = createContext<IImageContext>({
+  avatarUrl: "",
+  cropModal: false,
+  textModal: false,
+  extractedText: "",
+  buttonText: "",
+  updateAvatar: (imgSrc: string) => {},
+  handleCropModalClick: () => {},
+  handleTextModalClick: () => {},
+  clearAvatarUrl: () => {},
+  setExtractedText: (text: string) => {},
+  setButtonText: (text: string) => {},
+});

@@ -1,24 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import { removeFirstAndLastTwo } from "@/utils/textFormat";
 import Header from "./Header";
+import { ImageContext } from "@/context/ImageContext";
+import { useContext } from "react";
 
-interface ProfileProps {
-  imgSrc: string;
-  text: string;
-  closeModal: () => void;
-  clearUrl: () => void;
-}
-
-const TextModal: React.FC<ProfileProps> = ({
-  imgSrc,
-  text,
-  closeModal,
-  clearUrl,
-}) => {
+const TextModal = () => {
   const handleClick = () => {
-    closeModal();
-    clearUrl();
+    handleTextModalClick();
+    clearAvatarUrl();
   };
+
+  const { avatarUrl, extractedText, handleTextModalClick, clearAvatarUrl } =
+    useContext(ImageContext);
   return (
     <div
       className="relative z-10"
@@ -59,14 +52,14 @@ const TextModal: React.FC<ProfileProps> = ({
             </div>
             <div className="relative flex justify-center items-center mb-6 w-52 h-64 shadow-lg rounded-lg">
               <img
-                src={imgSrc}
+                src={avatarUrl}
                 alt="Avatar"
                 className="w-[90%] h-[90%] rounded-lg border-2 border-gray-400"
               />
             </div>
             <div className="w-3/4 mb-4">
               <p className="text-center text-black">
-                {removeFirstAndLastTwo(text)}
+                {removeFirstAndLastTwo(extractedText)}
               </p>
             </div>
 

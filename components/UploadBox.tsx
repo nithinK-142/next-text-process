@@ -1,33 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "./Modal";
 import Image from "next/image";
 import TextModal from "./TextModal";
+import { ImageContext } from "@/context/ImageContext";
 
 const UploadBox = () => {
-  const [avatarUrl, setAvatarUrl] = useState<string>("");
-  const [modalOpen, setModalOpen] = useState(false);
-  const [textModalOpen, setTextModalOpen] = useState(false);
-  const [text, setText] = useState("");
-  const [buttonText, setButtonText] = useState("Convert Image to Text");
-
-  const updateAvatar = (imgSrc: string) => {
-    setAvatarUrl(imgSrc);
-  };
-
-  const clearAvatarUrl = () => {
-    setAvatarUrl("");
-  };
+  const {
+    avatarUrl,
+    handleCropModalClick,
+    handleTextModalClick,
+    clearAvatarUrl,
+    buttonText,
+    cropModal,
+    textModal,
+    setButtonText,
+    setExtractedText,
+  } = useContext(ImageContext);
 
   const getText = async () => {
-    setButtonText("Extracting..");
+    setButtonText("Extracting text...");
     try {
       const response = await fetch("/api/text");
       if (response.ok) {
         const data = await response.text();
-        setText(data);
-        setTextModalOpen(true);
+        setExtractedText(data);
+        handleTextModalClick();
       } else console.error("Failed to fetch data from the API");
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -39,7 +38,7 @@ const UploadBox = () => {
     <div className="flex flex-col items-center pt-12">
       <div className="relative flex justify-center items-center mb-6 w-52 h-[20rem] shadow-lg rounded-lg">
         {!avatarUrl ? (
-          <button onClick={() => setModalOpen(true)} aria-label="Add Image">
+          <button onClick={handleCropModalClick} aria-label="Add Image">
             <Image src="/plus.png" alt="plus" width={60} height={60} />
           </button>
         ) : (
@@ -69,20 +68,8 @@ const UploadBox = () => {
         {buttonText}
       </button>
 
-      {textModalOpen && (
-        <TextModal
-          imgSrc={avatarUrl}
-          text={text}
-          closeModal={() => setTextModalOpen(false)}
-          clearUrl={() => setAvatarUrl("")}
-        />
-      )}
-      {modalOpen && (
-        <Modal
-          updateAvatar={updateAvatar}
-          closeModal={() => setModalOpen(false)}
-        />
-      )}
+      {textModal && <TextModal />}
+      {cropModal && <Modal />}
     </div>
   );
 };
