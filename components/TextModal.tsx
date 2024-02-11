@@ -26,14 +26,14 @@ const TextModal = () => {
             <div className="w-full">
               <Header />
             </div>
-            <div className="relative flex justify-center items-center mb-6 w-52 h-64 shadow-lg rounded-lg border-black/10">
+            <div className="relative flex bg-white justify-center items-center mb-6 w-52 h-64 shadow-lg rounded-lg border-black/10">
               <img
                 src={avatarUrl}
                 alt="Avatar"
                 className="w-[90%] h-[90%] rounded-lg"
               />
             </div>
-            <div className="w-3/4 mb-4">
+            <div className="w-3/4 mb-4 p-4 rounded-lg bg-white">
               <p className="text-center text-black">
                 {removeFirstAndLastTwo(extractedText)}
               </p>

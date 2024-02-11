@@ -58,13 +58,16 @@ const ImageCropper = () => {
 
   const onImageLoad = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     const { width, height } = e.currentTarget;
-
+    const aspectRatio = width / height;
+    
     const crop = makeAspectCrop(
       {
         unit: "%",
+        x: 0,
+        y: 0,
         width: 100,
       },
-      1,
+      aspectRatio,
       width,
       height
     );
@@ -73,12 +76,12 @@ const ImageCropper = () => {
 
   return (
     <>
-      {error && <p className="text-xs text-red-400">{error}</p>}
+      {error && <p className="text-sm text-center text-red-400">{error}</p>}
       <div className="flex flex-col items-center">
         {imgSrc && (
           <ReactCrop
             crop={crop}
-            onChange={(_pixelCrop, percentCrop) => setCrop(percentCrop)}
+            onChange={(_pixelCrop,percentCrop) => setCrop(percentCrop)}
             keepSelection
             minWidth={MIN_DIMENSION}
           >
