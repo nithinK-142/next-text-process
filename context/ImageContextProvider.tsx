@@ -6,9 +6,9 @@ export const ImageContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [avatarUrl, setAvatarUrl] = useState<string>("");
-  const [cropModal, setCropModal] = useState(false);
-  const [textModal, setTextModal] = useState(false);
-  const [extractedText, setExtractedText] = useState("");
+  const [cropModal, setCropModal] = useState<boolean>(false);
+  const [textModal, setTextModal] = useState<boolean>(false);
+  const [extractedText, setExtractedText] = useState<string>("");
   const [buttonText, setButtonText] = useState("Convert Image to Text");
 
   const updateAvatar = (imgSrc: string) => {
@@ -21,6 +21,11 @@ export const ImageContextProvider: FC<{ children: ReactNode }> = ({
 
   const handleTextModalClick = () => setTextModal((prev) => (prev = !prev));
 
+  const textModalClose = () => {
+    handleTextModalClick();
+    clearAvatarUrl();
+  };
+
   const ImageContextValue: IImageContext = {
     avatarUrl,
     cropModal,
@@ -30,6 +35,7 @@ export const ImageContextProvider: FC<{ children: ReactNode }> = ({
     updateAvatar,
     handleCropModalClick,
     handleTextModalClick,
+    textModalClose,
     clearAvatarUrl,
     setExtractedText,
     setButtonText,

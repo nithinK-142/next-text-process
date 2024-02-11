@@ -4,14 +4,10 @@ import { useContext } from "react";
 
 import { removeFirstAndLastTwo } from "@/utils/textFormat";
 import Header from "./Header";
+import CloseButton from "./CloseButton";
 
 const TextModal = () => {
-  const handleClick = () => {
-    handleTextModalClick();
-    clearAvatarUrl();
-  };
-
-  const { avatarUrl, extractedText, handleTextModalClick, clearAvatarUrl } =
+  const { avatarUrl, extractedText, textModalClose } =
     useContext(ImageContext);
   return (
     <div
@@ -25,28 +21,7 @@ const TextModal = () => {
         <div className="relative flex justify-center min-h-full px-2 py-12">
           <div className="relative w-[95%] sm:w-[80%] min-h-[60vh] rounded-2xl bg-white/80 shadow-xl transition-all flex flex-col items-center">
             <div className="absolute px-5 py-4 -top-10 -right-10">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center p-1 text-gray-400 rounded-md bg-gray-700 focus:outline-none top-2 right-2"
-                onClick={handleClick}
-              >
-                <span className="sr-only">Close menu</span>
-                <svg
-                  className="h-8 w-8"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+              <CloseButton handleClick={textModalClose} />
             </div>
             <div className="w-full">
               <Header />
@@ -66,7 +41,7 @@ const TextModal = () => {
 
             <button
               className="bg-blue-600/80 px-4 py-[6px] text-lg rounded-lg text-white"
-              onClick={handleClick}
+              onClick={textModalClose}
             >
               Upload Again!
             </button>

@@ -10,6 +10,7 @@ export interface IImageContext {
   updateAvatar: (imgUrl: string) => void;
   handleCropModalClick: () => void;
   handleTextModalClick: () => void;
+  textModalClose: () => void;
   clearAvatarUrl: () => void;
   setExtractedText: (text: string) => void;
   setButtonText: (text: string) => void;
@@ -24,6 +25,7 @@ export const ImageContext = createContext<IImageContext>({
   updateAvatar: (imgUrl: string) => {},
   handleCropModalClick: () => {},
   handleTextModalClick: () => {},
+  textModalClose: () => {},
   clearAvatarUrl: () => {},
   setExtractedText: (text: string) => {},
   setButtonText: (text: string) => {},
