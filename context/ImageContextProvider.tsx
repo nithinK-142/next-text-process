@@ -1,5 +1,5 @@
 "use client";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useContext, useState } from "react";
 import { ImageContext, IImageContext } from "./ImageContext";
 
 export const ImageContextProvider: FC<{ children: ReactNode }> = ({
@@ -52,3 +52,11 @@ export const ImageContextProvider: FC<{ children: ReactNode }> = ({
     </ImageContext.Provider>
   );
 };
+
+// export const useImageContext = () => {
+//   const context = useContext(ImageContext);
+//   if (!context) {
+//     throw new Error('useImageContext must be used within an ImageContextProvider');
+//   }
+//   return context;
+// };
