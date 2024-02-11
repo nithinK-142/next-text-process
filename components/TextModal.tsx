@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { removeFirstAndLastTwo } from "@/utils/textFormat";
-import Header from "./Header";
 import { ImageContext } from "@/context/ImageContext";
 import { useContext } from "react";
+
+import { removeFirstAndLastTwo } from "@/utils/textFormat";
+import Header from "./Header";
 
 const TextModal = () => {
   const handleClick = () => {

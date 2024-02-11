@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
-import { useContext, useState } from "react";
-import Modal from "./Modal";
-import Image from "next/image";
-import TextModal from "./TextModal";
+"use client"
 import { ImageContext } from "@/context/ImageContext";
+import { useContext } from "react";
+import CropModal from "./CropModal";
+import TextModal from "./TextModal";
+import Image from "next/image";
 
 const UploadBox = () => {
   const {
@@ -53,7 +53,7 @@ const UploadBox = () => {
               className="absolute text-4xl top-2 right-2"
               aria-label="Remove Image"
             >
-              <Image src="/circle.png" alt="plus" width={30} height={30} />
+              <Image src="/circle.png" alt="circle" width={30} height={30} />
             </button>
           </>
         )}
@@ -69,7 +69,7 @@ const UploadBox = () => {
       </button>
 
       {textModal && <TextModal />}
-      {cropModal && <Modal />}
+      {cropModal && <CropModal />}
     </div>
   );
 };

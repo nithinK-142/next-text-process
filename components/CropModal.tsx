@@ -2,7 +2,7 @@ import { ImageContext } from "@/context/ImageContext";
 import { useContext } from "react";
 import ImageCropper from "./ImageCropper";
 
-const Modal = () => {
+const CropModal = () => {
   const { handleCropModalClick } = useContext(ImageContext);
   return (
     <div
@@ -46,4 +46,4 @@ const Modal = () => {
     </div>
   );
 };
-export default Modal;
+export default CropModal;

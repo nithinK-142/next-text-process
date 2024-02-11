@@ -1,3 +1,4 @@
+"use client";
 import { createContext } from "react";
 
 export interface IImageContext {
@@ -6,7 +7,7 @@ export interface IImageContext {
   textModal: boolean;
   extractedText: string;
   buttonText: string;
-  updateAvatar: (imgSrc: string) => void;
+  updateAvatar: (imgUrl: string) => void;
   handleCropModalClick: () => void;
   handleTextModalClick: () => void;
   clearAvatarUrl: () => void;
@@ -20,7 +21,7 @@ export const ImageContext = createContext<IImageContext>({
   textModal: false,
   extractedText: "",
   buttonText: "",
-  updateAvatar: (imgSrc: string) => {},
+  updateAvatar: (imgUrl: string) => {},
   handleCropModalClick: () => {},
   handleTextModalClick: () => {},
   clearAvatarUrl: () => {},
