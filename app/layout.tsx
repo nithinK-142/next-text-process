@@ -21,8 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={kanit.className}>
-        <Header/>
-        {children}</body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
