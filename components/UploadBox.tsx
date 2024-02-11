@@ -5,11 +5,12 @@ import Modal from "./Modal";
 import Image from "next/image";
 import TextModal from "./TextModal";
 
-const Profile = () => {
+const UploadBox = () => {
   const [avatarUrl, setAvatarUrl] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
   const [textModalOpen, setTextModalOpen] = useState(false);
   const [text, setText] = useState("");
+  const [buttonText, setButtonText] = useState("Convert Image to Text");
 
   const updateAvatar = (imgSrc: string) => {
     setAvatarUrl(imgSrc);
@@ -20,6 +21,7 @@ const Profile = () => {
   };
 
   const getText = async () => {
+    setButtonText("Extracting..");
     try {
       const response = await fetch("/api/text");
       if (response.ok) {
@@ -29,6 +31,8 @@ const Profile = () => {
       } else console.error("Failed to fetch data from the API");
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setButtonText("Convert Image to Text");
     }
   };
   return (
@@ -62,7 +66,7 @@ const Profile = () => {
         onClick={getText}
         disabled={!avatarUrl}
       >
-        Convert Image to Text
+        {buttonText}
       </button>
 
       {textModalOpen && (
@@ -83,4 +87,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UploadBox;

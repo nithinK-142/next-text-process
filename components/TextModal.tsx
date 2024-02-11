@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { removeFirstAndLastTwo } from "@/utils/textFormat";
 import Header from "./Header";
 
 interface ProfileProps {
@@ -56,16 +57,25 @@ const TextModal: React.FC<ProfileProps> = ({
             <div className="w-full">
               <Header />
             </div>
-            <div className="relative flex justify-center items-center mb-6 w-52 h-[20rem] shadow-lg rounded-lg">
+            <div className="relative flex justify-center items-center mb-6 w-52 h-64 shadow-lg rounded-lg">
               <img
                 src={imgSrc}
                 alt="Avatar"
-                className="w-[90%] h-[60%] rounded-lg border-2 border-gray-400"
+                className="w-[90%] h-[90%] rounded-lg border-2 border-gray-400"
               />
             </div>
-            <div className="w-3/4">
-              <p className="text-center text-black">{text}</p>
+            <div className="w-3/4 mb-4">
+              <p className="text-center text-black">
+                {removeFirstAndLastTwo(text)}
+              </p>
             </div>
+
+            <button
+              className="bg-blue-600/80 px-4 py-[6px] text-lg rounded-lg text-white"
+              onClick={handleClick}
+            >
+              Upload Again!
+            </button>
           </div>
         </div>
       </div>
