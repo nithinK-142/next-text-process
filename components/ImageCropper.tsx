@@ -24,6 +24,11 @@ const ImageCropper = () => {
   const [imgSrc, setImgSrc] = useState<string>("");
   const [crop, setCrop] = useState<PercentCrop | undefined>(undefined);
   const [error, setError] = useState<string>("");
+  const hiddenFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleClick = () => {
+    hiddenFileInputRef.current?.click();
+  };
 
   const onSelectFile = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -63,24 +68,14 @@ const ImageCropper = () => {
       width,
       height
     );
-
     setCrop(crop);
   };
 
   return (
     <>
-      <label className="block mb-3 w-fit">
-        <span className="sr-only">Choose profile photo</span>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={onSelectFile}
-          className="block w-full text-sm text-slate-500 file:mr-4 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:bg-gray-700 file:text-sky-300 hover:file:bg-gray-600"
-        />
-      </label>
       {error && <p className="text-xs text-red-400">{error}</p>}
-      {imgSrc && (
-        <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center">
+        {imgSrc && (
           <ReactCrop
             crop={crop}
             onChange={(_pixelCrop, percentCrop) => setCrop(percentCrop)}
@@ -95,8 +90,23 @@ const ImageCropper = () => {
               onLoad={onImageLoad}
             />
           </ReactCrop>
+        )}
+        <div className="flex justify-center items-center space-x-2 mt-4">
           <button
-            className="px-4 py-2 mt-4 font-mono text-xs text-white rounded-2xl bg-sky-500 hover:bg-sky-600"
+            onClick={handleClick}
+            className="px-4 py-2 font-mono text-lg text-white rounded-2xl bg-sky-500 hover:bg-sky-600"
+          >
+            <span>Choose image</span>
+            <input
+              type="file"
+              ref={hiddenFileInputRef}
+              accept="image/*"
+              onChange={onSelectFile}
+              className="hidden"
+            />
+          </button>
+          <button
+            className="px-4 py-2 font-mono text-lg text-white rounded-2xl bg-sky-500 hover:bg-sky-600"
             onClick={() => {
               setCanvasPreview(
                 imgRef.current!,
@@ -111,15 +121,15 @@ const ImageCropper = () => {
               updateAvatar(dataUrl);
               handleCropModalClick();
             }}
+            disabled={!imgSrc}
           >
             Crop Image
           </button>
         </div>
-      )}
+      </div>
       {crop && (
         <canvas
           ref={previewCanvasRef}
-          className="mt-4"
           style={{
             display: "none",
             border: "1px solid black",

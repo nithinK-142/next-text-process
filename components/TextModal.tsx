@@ -26,11 +26,11 @@ const TextModal = () => {
             <div className="w-full">
               <Header />
             </div>
-            <div className="relative flex justify-center items-center mb-6 w-52 h-64 shadow-lg rounded-lg">
+            <div className="relative flex justify-center items-center mb-6 w-52 h-64 shadow-lg rounded-lg border-black/10">
               <img
                 src={avatarUrl}
                 alt="Avatar"
-                className="w-[90%] h-[90%] rounded-lg border-2 border-gray-400"
+                className="w-[90%] h-[90%] rounded-lg"
               />
             </div>
             <div className="w-3/4 mb-4">

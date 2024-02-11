@@ -46,7 +46,7 @@ const UploadBox = () => {
             <img
               src={avatarUrl}
               alt="Avatar"
-              className="w-[90%] h-[60%] rounded-lg border-2 border-gray-400"
+              className="w-[90%] h-[60%] rounded-lg"
             />
             <button
               onClick={clearAvatarUrl}
