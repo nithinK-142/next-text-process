@@ -9,14 +9,16 @@ import { useDispatch } from "react-redux";
 const useGetText = () => {
   const dispatch = useDispatch<AppDispatch>();
   const getText = async () => {
-    setButtonText("Extracting text...");
+    dispatch(setButtonText("Extracting text..."));
     try {
       const response = await fetch("/api/text");
       if (response.ok) {
         const data = await response.text();
         dispatch(setExtractedText(data));
         dispatch(toggleTextModal());
-      } else console.error("Failed to fetch data from the API");
+      } else {
+        console.error("Failed to fetch data from the API");
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
