@@ -1,6 +1,7 @@
 "use client";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useContext, useState } from "react";
 import { ImageContext, IImageContext } from "./ImageContext";
+import { IButtonContext, ButtonContext } from "./ButtonContextProvider";
 
 export const ImageContextProvider: FC<{ children: ReactNode }> = ({
   children,
@@ -15,8 +16,10 @@ export const ImageContextProvider: FC<{ children: ReactNode }> = ({
   const [extractedText, setExtractedText] = useState<string>("");
   const [buttonText, setButtonText] = useState("Convert Image to Text");
 
+  const { setImageUrls } = useContext<IButtonContext>(ButtonContext);
   const updateAvatar = (imgSrc: string) => {
     setAvatarUrl(imgSrc);
+    setImageUrls((prevUrls: string[]) => [...prevUrls, imgSrc]);
   };
 
   const clearAvatarUrl = () => setAvatarUrl("");
