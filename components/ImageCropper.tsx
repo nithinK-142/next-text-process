@@ -1,24 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import {
-  ChangeEvent,
-  SyntheticEvent,
-  useContext,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
 import ReactCrop, {
   PercentCrop,
   convertToPixelCrop,
   makeAspectCrop,
 } from "react-image-crop";
 import setCanvasPreview from "@/utils/setCanvasPreview";
-import { ImageContext } from "@/context/ImageContext";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import {
+  updateAvatar,
+  toggleCropModal,
+} from "@/redux/slices/processImageSlice";
 
 const MIN_DIMENSION = 150;
 
 const ImageCropper = () => {
-  const { updateAvatar, handleCropModalClick } = useContext(ImageContext);
+  const dispatch = useDispatch<AppDispatch>();
+
   const imgRef = useRef<HTMLImageElement | null>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [imgSrc, setImgSrc] = useState<string>("");
@@ -59,7 +59,7 @@ const ImageCropper = () => {
   const onImageLoad = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     const { width, height } = e.currentTarget;
     const aspectRatio = width / height;
-    
+
     const crop = makeAspectCrop(
       {
         unit: "%",
@@ -81,7 +81,7 @@ const ImageCropper = () => {
         {imgSrc && (
           <ReactCrop
             crop={crop}
-            onChange={(_pixelCrop,percentCrop) => setCrop(percentCrop)}
+            onChange={(_pixelCrop, percentCrop) => setCrop(percentCrop)}
             keepSelection
             minWidth={MIN_DIMENSION}
           >
@@ -121,8 +121,8 @@ const ImageCropper = () => {
                 )
               );
               const dataUrl = previewCanvasRef.current!.toDataURL();
-              updateAvatar(dataUrl);
-              handleCropModalClick();
+              dispatch(updateAvatar(dataUrl));
+              dispatch(toggleCropModal());
             }}
             disabled={!imgSrc}
           >

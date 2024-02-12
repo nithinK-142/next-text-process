@@ -1,10 +1,11 @@
-import { ImageContext } from "@/context/ImageContext";
-import { useContext } from "react";
 import ImageCropper from "./ImageCropper";
 import CloseButton from "./CloseButton";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { toggleCropModal } from "@/redux/slices/processImageSlice";
 
 const CropModal = () => {
-  const { handleCropModalClick } = useContext(ImageContext);
+  const dispatch = useDispatch<AppDispatch>();
   return (
     <div
       className="relative z-10"
@@ -18,7 +19,7 @@ const CropModal = () => {
           <div className="w-[95%] sm:w-[80%] min-h-[60vh] rounded-2xl bg-gray-800 text-slate-100 text-left shadow-xl transition-all">
             <div className="relative px-5 py-4">
               <div className="absolute px-5 py-4 -top-10 -right-10">
-                <CloseButton handleClick={handleCropModalClick} />
+                <CloseButton handleClick={() => dispatch(toggleCropModal())} />
               </div>
               <ImageCropper />
             </div>

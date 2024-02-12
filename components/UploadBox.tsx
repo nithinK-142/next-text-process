@@ -1,44 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
-"use client"
-import { ImageContext } from "@/context/ImageContext";
-import { useContext } from "react";
+"use client";
 import CropModal from "./CropModal";
 import TextModal from "./TextModal";
 import Image from "next/image";
+import useGetText from "@/hooks/useGetText";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import {
+  toggleCropModal,
+  clearAvatarUrl,
+} from "@/redux/slices/processImageSlice";
+import { useDispatch } from "react-redux";
 
 const UploadBox = () => {
-  const {
-    avatarUrl,
-    handleCropModalClick,
-    handleTextModalClick,
-    clearAvatarUrl,
-    buttonText,
-    cropModal,
-    textModal,
-    setButtonText,
-    setExtractedText,
-  } = useContext(ImageContext);
-
-  const getText = async () => {
-    setButtonText("Extracting text...");
-    try {
-      const response = await fetch("/api/text");
-      if (response.ok) {
-        const data = await response.text();
-        setExtractedText(data);
-        handleTextModalClick();
-      } else console.error("Failed to fetch data from the API");
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setButtonText("Convert Image to Text");
-    }
-  };
+  const { avatarUrl, buttonText, cropModal, textModal } = useAppSelector(
+    (state) => state.processImageReducer
+  );
+  const dispatch = useDispatch<AppDispatch>();
+  const { getText } = useGetText();
   return (
     <div className="flex flex-col items-center pt-12">
       <div className="bg-white relative flex justify-center items-center mb-6 w-52 h-[20rem] shadow-3xl border border-black/10 rounded-lg">
         {!avatarUrl ? (
-          <button onClick={handleCropModalClick} aria-label="Add Image">
+          <button
+            onClick={() => dispatch(toggleCropModal())}
+            aria-label="Add Image"
+          >
             <Image src="/plus.png" alt="plus" width={60} height={60} />
           </button>
         ) : (
@@ -49,7 +35,7 @@ const UploadBox = () => {
               className="w-[90%] h-[60%] rounded-lg"
             />
             <button
-              onClick={clearAvatarUrl}
+              onClick={() => dispatch(clearAvatarUrl())}
               className="absolute text-4xl top-2 right-2"
               aria-label="Remove Image"
             >

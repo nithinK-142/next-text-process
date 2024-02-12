@@ -1,14 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-import { ImageContext } from "@/context/ImageContext";
-import { useContext } from "react";
 
 import { removeFirstAndLastTwo } from "@/utils/textFormat";
 import Header from "./Header";
 import CloseButton from "./CloseButton";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { clearUpload } from "@/redux/slices/processImageSlice";
+import { useDispatch } from "react-redux";
 
 const TextModal = () => {
-  const { avatarUrl, extractedText, textModalClose } =
-    useContext(ImageContext);
+  const { avatarUrl, extractedText } = useAppSelector(
+    (state) => state.processImageReducer
+  );
+  const dispatch = useDispatch<AppDispatch>();
   return (
     <div
       className="relative z-10"
@@ -21,7 +24,7 @@ const TextModal = () => {
         <div className="relative flex justify-center min-h-full px-2 py-12">
           <div className="relative w-[95%] sm:w-[80%] min-h-[60vh] rounded-2xl bg-white/80 shadow-xl transition-all flex flex-col items-center">
             <div className="absolute px-5 py-4 -top-10 -right-10">
-              <CloseButton handleClick={textModalClose} />
+              <CloseButton handleClick={() => dispatch(clearUpload())} />
             </div>
             <div className="w-full">
               <Header />
@@ -41,7 +44,7 @@ const TextModal = () => {
 
             <button
               className="bg-blue-600/80 px-4 py-[6px] text-lg rounded-lg text-white"
-              onClick={textModalClose}
+              onClick={() => dispatch(clearUpload())}
             >
               Upload Again!
             </button>

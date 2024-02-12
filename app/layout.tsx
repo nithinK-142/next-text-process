@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Kanit } from "next/font/google";
 import "./globals.css";
-import { ImageContextProvider } from "@/context/ImageContextProvider";
 import Header from "@/components/Header";
+import ReduxProvider from "@/redux/provider";
 
 const kanit = Kanit({
   weight: ["100", "400", "500", "600", "700"],
@@ -22,10 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={kanit.className}>
-        <ImageContextProvider>
+        <ReduxProvider>
           <Header />
           {children}
-        </ImageContextProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
